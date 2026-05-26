@@ -1,0 +1,24 @@
+# Core ML
+torch>=2.0
+torchvision>=0.15
+timm>=0.9                       # Vision Transformer
+
+# Medical imaging
+pydicom>=2.4                    # DICOM reading
+nibabel>=5.0                    # NIfTI reading
+monai>=1.3                      # 3D segmentation framework
+medmnist>=3.0                   # PneumoniaMNIST loader
+
+# Dataset helpers
+fastai>=2.7                     # Used only for untar_data(URLs.SIIM_SMALL)
+
+# Interpretability
+grad-cam>=1.5
+
+# UI + data science
+streamlit>=1.30
+pandas>=2.0
+numpy>=1.24
+matplotlib>=3.7
+scikit-learn>=1.3
+Pillow>=10.0

@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Datasets — these get downloaded, not committed
+data/medmnist/
+data/monai/
+data/siim_small/
+
+# Model weights — too big for git
+models/*.pt
+models/*.pth
+models/*.bin
+
+# Training logs (keep the JSON, ignore tensorboard etc.)
+runs/
+logs/
+*.log
+
+# Streamlit
+.streamlit/secrets.toml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
