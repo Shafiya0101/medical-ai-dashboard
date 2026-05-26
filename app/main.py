@@ -1,4 +1,4 @@
-"""
+﻿"""
 AI for Health — Interactive Dashboard
 ======================================
 Three demos in one app:
@@ -168,15 +168,16 @@ c1, c2, c3 = st.columns(3)
 with c1:
     st.markdown("### 📊 DICOM Explorer")
     st.markdown("Auto-downloads the dataset on first run. Takes ~30 seconds.")
-    st.page_link("pages/1_📊_DICOM_Explorer.py", label="Open →", icon="📊")
+    st.page_link("pages/1_DICOM_Explorer.py", label="Open →", icon="📊")
 with c2:
     st.markdown("### 🧠 X-ray Classification")
     st.markdown("Upload a chest X-ray (or use a built-in sample). Inference takes ~2 seconds.")
-    st.page_link("pages/2_🧠_Xray_Classification.py", label="Open →", icon="🧠")
+    st.page_link("pages/2_Xray_Classification.py", label="Open →", icon="🧠")
 with c3:
     st.markdown("### 🔬 Spleen Segmentation")
     st.markdown("Browse a sample 3D CT volume, scroll through slices, see predicted spleen mask.")
-    st.page_link("pages/3_🔬_Spleen_Segmentation.py", label="Open →", icon="🔬")
+    st.page_link("pages/3_Spleen_Segmentation.py", label="Open →", icon="🔬")
 
 st.divider()
 st.caption("Built for the PGE5 AI for Health course. Code: https://github.com/yourusername/ai-for-health")
+
