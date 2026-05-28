@@ -12,6 +12,9 @@ import streamlit as st
 import numpy as np
 import torch
 import matplotlib.pyplot as plt
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from model_loader import get_model_path
 
 st.set_page_config(page_title="Spleen Segmentation", page_icon="🔬", layout="wide")
 st.title("🔬 3D Spleen Segmentation — MONAI U-Net")
@@ -25,7 +28,6 @@ st.markdown(
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 ROOT = Path(__file__).resolve().parents[2]
-MODEL_PATH = ROOT / "models" / "unet_spleen.pt"
 SAMPLE_DIR = ROOT / "data" / "sample_volumes"
 
 
@@ -44,9 +46,12 @@ def load_unet():
         num_res_units=2,
     )
     trained = False
-    if MODEL_PATH.exists():
-        model.load_state_dict(torch.load(MODEL_PATH, map_location=DEVICE))
+    try:
+        path = get_model_path("unet_spleen.pt")
+        model.load_state_dict(torch.load(path, map_location=DEVICE))
         trained = True
+    except Exception as e:
+        print(f"Could not load U-Net: {e}")
     return model.to(DEVICE).eval(), trained
 
 
@@ -105,7 +110,7 @@ def iou_score(pred, label):
 model, trained = load_unet()
 if not trained:
     st.error(
-        f"**No trained model found at `{MODEL_PATH}`.**\n\n"
+        "**Could not load the trained U-Net weights** (`unet_spleen.pt`).\n\n"
         f"Train it first:\n```bash\npython scripts/train_segmentation.py\n```\n\n"
         f"This downloads the Decathlon Task09 Spleen dataset (~1.5 GB) and "
         f"trains for ~10 epochs (20–40 min on a T4 GPU)."
@@ -136,7 +141,7 @@ if not lbl_path.exists():
     st.stop()
 
 # Run inference (cached)
-img, lbl, pred = run_inference(str(vol_path), str(lbl_path), str(MODEL_PATH))
+img, lbl, pred = run_inference(str(vol_path), str(lbl_path), "unet_spleen")
 
 # ---------- KPIs ----------
 dice = dice_score(pred, lbl)
