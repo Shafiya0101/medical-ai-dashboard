@@ -21,6 +21,9 @@ from torchvision import models, transforms as T
 from PIL import Image
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from model_loader import get_model_path
 
 st.set_page_config(page_title="X-ray Classification", page_icon="🧠", layout="wide")
 st.title("🧠 Chest X-ray Classification — ResNet50 vs ViT")
@@ -46,14 +49,15 @@ IMAGENET_STD  = [0.229, 0.224, 0.225]
 # =============================================================================
 @st.cache_resource(show_spinner="Loading ResNet50...")
 def load_resnet():
-    path = MODEL_DIR / "resnet50_pneumonia.pt"
     model = models.resnet50(weights=None)
     model.fc = nn.Linear(model.fc.in_features, 2)
-    if path.exists():
+    trained = False
+    try:
+        path = get_model_path("resnet50_pneumonia.pt")
         model.load_state_dict(torch.load(path, map_location=DEVICE))
         trained = True
-    else:
-        trained = False
+    except Exception as e:
+        print(f"Could not load ResNet50: {e}")
     model = model.to(DEVICE).eval()
     return model, trained
 
@@ -61,13 +65,14 @@ def load_resnet():
 @st.cache_resource(show_spinner="Loading ViT-B/16...")
 def load_vit():
     import timm
-    path = MODEL_DIR / "vit_pneumonia.pt"
     model = timm.create_model("vit_base_patch16_224", pretrained=False, num_classes=2)
-    if path.exists():
+    trained = False
+    try:
+        path = get_model_path("vit_pneumonia.pt")
         model.load_state_dict(torch.load(path, map_location=DEVICE))
         trained = True
-    else:
-        trained = False
+    except Exception as e:
+        print(f"Could not load ViT: {e}")
     model = model.to(DEVICE).eval()
     return model, trained
 
