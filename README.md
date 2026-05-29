@@ -3,7 +3,7 @@
 > A teaching dashboard that walks through three foundational tasks in medical AI: **DICOM metadata extraction**, **chest X-ray classification (ResNet50 vs ViT)**, and **3D organ segmentation (MONAI U-Net)**. Built as a Streamlit app for the PGE5 AI for Health course.
 
 ## 🔗 Live Demo
-**Try the app:** https://your-app.streamlit.app
+**Try the app:** [https://your-app.streamlit.app](https://medical-ai-dashboard-gy7fx5ccwliymcw7xd3c2q.streamlit.app/)
 
 **Source code:** https://github.com/Shafiya0101/medical-ai-dashboard
 ---
